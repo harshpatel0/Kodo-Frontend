@@ -7,21 +7,28 @@ type ButtonProperties = {
   disabled: boolean;
   text: React.ReactNode;
 
-  to: string;
-  state: { [key: string]: string };
+  to?: string;
+  state?: { [key: string]: string };
 
-  onClick: (event: React.MouseEvent<HTMLButtonElement>) => void;
+  onClick?: (event: React.MouseEvent<HTMLButtonElement>) => void;
 };
 
-export default function Button(props: ButtonProperties) {
-  const buttonStyles = cx(styles.button, styles[`button-${props.type}`], {
-    [styles.disabled]: props.disabled,
+export default function Button({
+  text,
+  to,
+  type = "primary",
+  disabled = false,
+  state = {},
+  onClick = () => {},
+}: ButtonProperties) {
+  const buttonStyles = cx(styles.button, styles[`button-${type}`], {
+    [styles.disabled]: disabled,
   });
 
-  if (props.to) {
+  if (to) {
     return (
-      <Link to={props.to} state={props.state} className={buttonStyles}>
-        {props.text}
+      <Link to={to} state={state} className={buttonStyles}>
+        {text}
       </Link>
     );
   }
@@ -29,10 +36,10 @@ export default function Button(props: ButtonProperties) {
   return (
     <button
       className={buttonStyles}
-      disabled={props.disabled}
-      onClick={props.onClick}
+      disabled={disabled}
+      onClick={(e) => onClick?.(e)}
     >
-      {props.text}
+      {text}
     </button>
   );
 }
