@@ -3,8 +3,8 @@ import cx from "classnames";
 import { Link } from "react-router-dom";
 
 type ButtonProperties = {
-  type: "primary" | "secondary" | "accent";
-  disabled: boolean;
+  type?: "primary" | "secondary" | "accent";
+  disabled?: boolean;
   text: React.ReactNode;
 
   to?: string;
