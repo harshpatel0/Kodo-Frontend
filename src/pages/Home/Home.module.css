@@ -1,0 +1,25 @@
+.taskBox {
+  display: flex;
+  align-items: stretch;
+  background-color: rgba(255, 255, 255, 0.13);
+  border-radius: 25px;
+  overflow: hidden;
+  transition: box-shadow var(--t-slow);
+  margin-top: 0.75rem;
+}
+
+.mainContent {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100vw;
+  height: 100vh;
+}
+
+.taskBox:hover {
+  box-shadow: 2px 4px 10px 1px whitesmoke;
+}
+
+.taskBoxInput:hover {
+  box-shadow: none; /* Let the parent handle hover */
+}
