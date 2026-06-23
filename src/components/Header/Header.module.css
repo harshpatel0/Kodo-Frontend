@@ -1,0 +1,40 @@
+.headerContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0px 0px 0px 0px whitesmoke;
+  transition: box-shadow var(--t-slow);
+}
+
+.headerRoot {
+  display: flex;
+  gap: 1.5rem;
+  justify-content: center;
+  align-items: center;
+
+  mix-blend-mode: difference;
+  color: white;
+}
+
+.headerBranding {
+  justify-content: center;
+  align-items: center;
+}
+
+.brandingLetter {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 600;
+  font-style: normal;
+  transition:
+    font-weight 0.3s ease,
+    font-style 0.3s ease;
+  font-optical-sizing: auto;
+  font-size: 1.5rem;
+}
+
+.brandingLetter:hover {
+  font-weight: 900;
+  font-style: italic;
+  transform: scale(1.1);
+}
