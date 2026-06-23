@@ -1,4 +1,287 @@
-* {
+/* Jost Variable Font (Normal) */
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/Jost/Jost-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900; /* Define the weight range */
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Jost Variable Font (Italic) */
+@font-face {
+  font-family: "Jost";
+  src: url("/fonts/Jost/Jost-Italic-VariableFont_wght.ttf") format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* JetBrains Mono Variable (Normal) */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/src/fonts/JetBrainsMono/JetBrainsMono-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* JetBrains Mono Variable (Italic) */
+@font-face {
+  font-family: "JetBrains Mono";
+  src: url("/src/fonts/JetBrainsMono/JetBrainsMono-Italic-VariableFont_wght.ttf")
+    format("truetype");
+  font-weight: 100 900;
+  font-style: italic;
+  font-display: swap;
+}
+
+/* CSS reset */
+
+/* 1. Use a more-intuitive box-sizing model */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+/* 2. Remove default margin */
+*:not(dialog) {
   margin: 0;
-  padding: 0;
+}
+
+/* 3. Enable keyword animations */
+@media (prefers-reduced-motion: no-preference) {
+  html {
+    interpolate-size: allow-keywords;
+  }
+}
+
+body {
+  /* 4. Increase line-height */
+  line-height: 1.5;
+  /* 5. Improve text rendering */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* 6. Improve media defaults */
+img,
+picture,
+video,
+canvas,
+svg {
+  display: block;
+  max-width: 100%;
+}
+
+/* 7. Inherit fonts for form controls */
+input,
+button,
+textarea,
+select {
+  font: inherit;
+}
+
+/* 8. Avoid text overflows */
+p,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  overflow-wrap: break-word;
+}
+
+/* 9. Improve line wrapping */
+p {
+  text-wrap: pretty;
+}
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+  text-wrap: balance;
+}
+
+/*
+  10. Create a root stacking context
+*/
+#root,
+#__next {
+  isolation: isolate;
+}
+
+:root {
+  /* Fonts & Typography Scales (Universal) */
+  --font-ui: "Jost", sans-serif;
+  --font-mono: "JetBrains Mono", monospace;
+
+  --text-xs: 0.88rem;
+  --text-sm: 0.98rem;
+  --text-base: 1.08rem;
+  --text-md: 1.3rem;
+  --text-lg: 1.6rem;
+  --text-xl: 2rem;
+  --text-2xl: 2.2rem;
+
+  /* Spacing & Sizing (Universal) */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 20px;
+  --sp-6: 24px;
+  --sp-8: 32px;
+  --sp-10: 40px;
+  --sp-12: 48px;
+
+  /* Layout & Animation (Universal) */
+  --radius-sm: 3px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+  --sidebar-w: 210px;
+  --header-h: 52px;
+  --t-fast: 110ms ease;
+  --t-mid: 200ms ease;
+  --t-slow: 340ms ease;
+
+  /* --- LIGHT MODE SPECIFIC TOKENS --- */
+  /* Base Colors */
+  --bg-void: #f2eded;
+  --bg-base: #faf6f6;
+  --bg-surface: #ffffff;
+  --bg-elevated: #fcf8f8;
+  --bg-overlay: #f5eded;
+
+  --border-subtle: #eae1e1;
+  --border-default: #dbcece;
+  --border-strong: #bcabab;
+
+  --amber: #c8534b;
+  --amber-bright: #ad3d36;
+  --amber-dim: #fceceb;
+  --amber-glow: rgba(200, 83, 75, 0.08);
+  --amber-glow-md: rgba(200, 83, 75, 0.15);
+
+  --green: #3f7d6d;
+  --green-dim: #ecf6f3;
+  --green-glow: rgba(63, 125, 109, 0.08);
+
+  --red: #c2516b;
+  --red-dim: #fdf0f3;
+  --red-glow: rgba(194, 81, 107, 0.08);
+
+  --cyan: #3d6ca3;
+  --cyan-dim: #ebf3fc;
+
+  --text-primary: #1c1818;
+  --text-secondary: #5c5050;
+  --text-muted: #8c7d7d;
+
+  --color-background: #fefcfdff;
+  --color-foreground: var(var(--text-primary));
+
+  /* --- ELEMENT MAPPINGS (LIGHT) --- */
+  /* Primary Action Elements (Buttons, Core Links, Badges) */
+  --element-primary-bg: var(--amber);
+  --element-primary-text: var(--bg-surface); /* White text on red */
+  --element-primary-hover: var(--amber-bright);
+  --element-primary-active: var(--amber-dim);
+
+  /* Secondary Action Elements (Secondary buttons, outline elements) */
+  --element-secondary-bg: var(--green);
+  --element-secondary-text: var(--bg-surface); /* White text on green */
+  --element-secondary-hover: #2f6154;
+  --element-secondary-active: var(--green-dim);
+
+  --element-accent-bg: var(--cyan);
+  --element-accent-text: var(--bg-surface);
+  --element-accent-bg-hover: #2b5382; /* Deepened rich ice-blue for hover */
+
+  /* Destructive States */
+  --element-danger-bg: var(--red);
+  --element-danger-text: var(--bg-surface);
+  --element-danger-bg-hover: #a63f55; /* Deeper crimson for contrast hover */
+
+  /* Muted Forms, Inputs, and Disabled elements */
+  --element-disabled-bg: var(--border-subtle);
+  --element-disabled-text: var(--text-muted);
+}
+
+/* ==========================================================================
+   2. DARK MODE THEME (System Media Query Override)
+   ========================================================================== */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Base Colors */
+    --bg-void: #0d0b0b;
+    --bg-base: #141111;
+    --bg-surface: #1c1818;
+    --bg-elevated: #241f1f;
+    --bg-overlay: #2d2727;
+
+    --color-background: var(--bg-base);
+    --color-foreground: #fefcfdff;
+
+    --border-subtle: #292222;
+    --border-default: #382f2f;
+    --border-strong: #4a3f3f;
+
+    --amber: #f39890;
+    --amber-bright: #ffb2aa;
+    --amber-dim: #3d211f;
+    --amber-glow: rgba(243, 152, 144, 0.1);
+    --amber-glow-md: rgba(243, 152, 144, 0.2);
+
+    --green: #a3d9c9;
+    --green-dim: #1f332d;
+    --green-glow: rgba(163, 217, 201, 0.1);
+
+    --red: #f7a1b5;
+    --red-dim: #3d1e25;
+    --red-glow: rgba(247, 161, 181, 0.1);
+
+    --cyan: #a8cbf5;
+    --cyan-dim: #212e3d;
+
+    --text-primary: #f5eded;
+    --text-secondary: #baaaaa;
+    --text-muted: #6e6060;
+
+    /* --- ELEMENT MAPPINGS (DARK) --- */
+    /* Primary Elements (High readability dark contrast on pastel) */
+    --element-primary-bg: var(--amber);
+    --element-primary-text: var(--bg-void); /* Dark text on pastel red */
+    --element-primary-hover: var(--amber-bright);
+    --element-primary-active: var(--amber-dim);
+
+    /* Secondary Elements */
+    --element-secondary-bg: var(--green);
+    --element-secondary-text: var(--bg-void); /* Dark text on pastel green */
+    --element-secondary-hover: #bee5db;
+    --element-secondary-active: var(--green-dim);
+
+    /* Navigational / Accent Elements */
+    --element-accent-bg: var(--cyan);
+    --element-accent-text: var(--bg-void);
+    --element-accent-hover: #c2ddff; /* Brighter, glowing icy-blue pastel */
+
+    /* Destructive Elements */
+    --element-danger-bg: var(--red);
+    --element-danger-text: var(--bg-void);
+    --element-danger-hover: #ffb5c7; /* Lighter, highly visible rose pastel */
+
+    /* Disabled elements in Dark mode */
+    --element-disabled-bg: var(--bg-elevated);
+    --element-disabled-text: var(--text-muted);
+  }
+}
+
+body {
+  font-family: "Jost";
+  background-color: var(--bg-base);
+  color: var(--color-foreground);
 }
