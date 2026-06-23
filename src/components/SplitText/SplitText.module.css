@@ -1,0 +1,18 @@
+.splitText {
+  display: inline-block;
+  cursor: pointer;
+  font-weight: 600;
+  font-style: normal;
+  transition:
+    font-weight 0.3s ease,
+    font-style 0.3s ease,
+    margin-left 0.3s ease;
+  font-optical-sizing: auto;
+}
+
+.splitText:hover {
+  margin-left: 3px;
+  font-weight: 900;
+  font-style: italic;
+  transform: scale(1.1);
+}
