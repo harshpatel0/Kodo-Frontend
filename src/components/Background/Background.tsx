@@ -5,7 +5,7 @@ export default function Background() {
   return (
     <div className={styles.backgroundElement}>
       <div className={styles.backgroundDesktopStream}>
-        <DesktopStreamImage />
+        <DesktopStreamImage useBackgroundFeed />
       </div>
 
       <div className={styles.backgroundBlurOverlay}></div>
