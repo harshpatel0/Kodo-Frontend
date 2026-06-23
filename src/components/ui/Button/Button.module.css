@@ -1,0 +1,69 @@
+.button {
+  padding: 10px 20px;
+  border: none;
+  outline: none;
+  cursor: pointer;
+  transition: transform var(--t-mid);
+}
+
+.button:hover {
+  transform: scale(1.05);
+}
+
+.disabled {
+  background-color: var(--color-button-disabled-bg);
+  color: var(--color-button-disabled-text);
+}
+
+.button-primary {
+  background-color: var(--element-primary-bg);
+  color: var(--element-primary-text);
+
+  transition:
+    background-color var(--t-mid),
+    transform var(--t-mid);
+}
+
+.button-primary:hover {
+  background-color: var(--element-primary-hover);
+  transform: scale(1.2);
+}
+
+.button-secondary {
+  background-color: var(--element-secondary-bg);
+  color: var(--element-secondary-text);
+
+  transition:
+    background-color var(--t-mid),
+    transform var(--t-mid);
+}
+
+.button-secondary:hover {
+  background-color: var(--element-secondary-hover);
+  transform: scale(1.2);
+}
+
+.button-accent {
+  background-color: var(--element-accent-bg);
+  color: var(--element-accent-text);
+
+  transition:
+    background-color var(--t-mid),
+    transform var(--t-mid);
+}
+
+.button-accent:hover {
+  background-color: var(--element-accent-hover);
+  transform: scale(1.2);
+}
+
+.button-blurred {
+  background-color: rgba(255, 255, 255, 0.13);
+  color: var(--color-foreground);
+  font-size: 1rem;
+}
+
+.button-blurred:hover {
+  background-color: rgba(0, 0, 0, 0.26);
+  color: white;
+}
