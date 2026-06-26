@@ -1,4 +1,5 @@
 import styles from "./DesktopStreamImage.module.css";
+import { KODO_BASE_URL } from "../../utils/globals";
 
 export default function DesktopStreamImage({
   useBackgroundFeed = false,
@@ -10,8 +11,8 @@ export default function DesktopStreamImage({
       className={styles.desktopStreamImage}
       src={
         useBackgroundFeed
-          ? "http://localhost:8000/bg-desktop-feed"
-          : "http://localhost:8000/desktop-feed"
+          ? KODO_BASE_URL + "/bg-desktop-feed"
+          : KODO_BASE_URL + "/desktop-feed"
       }
     ></img>
   );
