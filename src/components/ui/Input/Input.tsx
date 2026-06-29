@@ -22,9 +22,9 @@ export default function Input({
 }: InputProperties) {
   return (
     <div className={styles.group}>
-      <label className={styles.label}>{label}</label>
+      {label && <label className={styles.label}>{label}</label>}
       <input
-        className={cx(styles.label, {
+        className={cx(styles.field, {
           [styles.transparent]: useTranslucentBackground,
           className,
         })}

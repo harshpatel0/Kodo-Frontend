@@ -1,8 +1,9 @@
 .group {
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   gap: var(--sp-2);
-  margin-bottom: var(--sp-4);
   width: 100%;
 }
 
@@ -15,26 +16,18 @@
 }
 
 .field {
-  font-family: var(--font-mono);
-  font-size: var(--text-sm);
-  padding: var(--sp-3);
+  padding-left: var(--sp-4);
+  padding-right: var(--sp-4);
   background-color: var(--bg-surface);
   color: var(--text-primary);
-  border: 1px solid var(--border-default);
   border-radius: var(--radius-md);
-  outline: none;
-  transition:
-    border-color var(--t-fast),
-    box-shadow var(--t-fast);
+  display: flex;
+  justify-self: center;
+  align-self: center;
 }
 
 .field::placeholder {
   color: var(--text-muted);
-}
-
-.field:focus {
-  border-color: var(--element-primary-bg);
-  box-shadow: 0 0 0 3px var(--amber-glow);
 }
 
 .transparent {
@@ -44,9 +37,4 @@
   border: none;
   border-radius: 0;
   width: 100%;
-  transition: none;
-}
-
-.transparent:hover {
-  box-shadow: none;
 }
