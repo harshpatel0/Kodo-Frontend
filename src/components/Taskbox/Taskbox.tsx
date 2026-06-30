@@ -9,18 +9,12 @@ import { useState } from "react";
 type TaskBoxProperties = {
   taskValue: string;
   setTaskValue: (newTaskValue: string) => void;
-
-  isButtonClicked: boolean;
-  onButtonClick: (setIsButtonClicked: boolean) => void;
-
   buttonDisabled: boolean;
 };
 
 export default function TaskBox({
   taskValue,
   setTaskValue,
-  isButtonClicked,
-  onButtonClick,
   buttonDisabled,
 }: TaskBoxProperties) {
   const [isHovered, setIsHovered] = useState(false);
@@ -39,8 +33,8 @@ export default function TaskBox({
         onMouseEnter={() => setIsHovered(true)}
         onMouseLeave={() => setIsHovered(false)}
         style={{ padding: "9px 16px" }}
-        onClick={() => onButtonClick(!isButtonClicked)}
         disabled={buttonDisabled}
+        to={`/task/${taskValue}`}
       >
         {isHovered ? (
           <div

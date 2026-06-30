@@ -1,0 +1,10 @@
+.main {
+  padding-top: 7rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+}

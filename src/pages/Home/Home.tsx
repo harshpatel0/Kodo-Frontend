@@ -10,8 +10,7 @@ import TaskBox from "../../components/Taskbox/Taskbox";
 
 export default function Home() {
   const [taskValue, setTaskValue] = useState("");
-  const [isButtonClicked, setIsButtonClicked] = useState(false);
-  const [disableButton, _] = useState(false);
+  const [disableButton] = useState(false);
 
   return (
     <>
@@ -27,8 +26,6 @@ export default function Home() {
           <TaskBox
             taskValue={taskValue}
             setTaskValue={setTaskValue}
-            isButtonClicked={isButtonClicked}
-            onButtonClick={setIsButtonClicked}
             buttonDisabled={disableButton}
           />
         </div>
