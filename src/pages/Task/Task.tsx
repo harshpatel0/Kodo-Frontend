@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom";
 import styles from "./Task.module.css";
 
 import type { ConnectionStatus } from "../../hooks/types";
+import DesktopStreamImage from "../../components/DesktopStreamImage/DesktopStreamImage";
 
 function TaskControls({
   disconnect,
@@ -105,7 +106,8 @@ export default function Task() {
     if (task) {
       connect(task);
     }
-  }, [task, connect]);
+    return () => disconnect();
+  }, [task, connect, disconnect]);
 
   return (
     <>
@@ -120,6 +122,8 @@ export default function Task() {
           </section>
           <section>
             <LogsView />
+            <br />
+            <DesktopStreamImage />
           </section>
         </section>
       </main>
