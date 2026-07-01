@@ -110,7 +110,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
               setLogs((prev) => [...prev, parsed]);
               break;
             case "thinking":
-              setThinking((prev) => prev + parsed.data.text);
+              setThinking(parsed.data.text);
               break;
             case "action":
               setAction(parsed);
