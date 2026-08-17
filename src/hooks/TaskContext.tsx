@@ -36,7 +36,12 @@ interface TaskContextValue<T extends TaskStreamTypes = TaskStreamTypes> {
   status: ConnectionStatus;
   error: string | null;
   done: boolean;
-  connect: (task: string, modeOverride?: "planner-actor" | "autonomy") => void;
+  observing: boolean;
+  connect: (
+    task: string,
+    modeOverride?: "planner-actor" | "autonomy",
+    observe?: boolean,
+  ) => void;
   disconnect: () => void;
 }
 
@@ -55,32 +60,69 @@ export function TaskProvider({ children }: { children: ReactNode }) {
   const [metrics, setMetrics] = useState<MetricsEvent | null>(null);
   const [plan, setPlan] = useState<PlannerPlanEvent | null>(null);
   const [done, setDone] = useState(false);
+  const [observing, setObserving] = useState(false);
 
   const wsRef = useRef<WebSocket | null>(null);
+  const erroredRef = useRef(false);
+  const runKeyRef = useRef("");
 
   const disconnect = useCallback(() => {
+    runKeyRef.current = "";
     wsRef.current?.close();
     wsRef.current = null;
     setStatus("disconnected");
+    setObserving(false);
   }, []);
 
   const connect = useCallback(
-    (task: string, modeOverride?: "planner-actor" | "autonomy") => {
-      if (!task) return;
+    (
+      task: string,
+      modeOverride?: "planner-actor" | "autonomy",
+      observe?: boolean,
+    ) => {
+      if (!task && !observe) return;
 
-      wsRef.current?.close();
+      const key = observe ? "observe" : `task:${task}`;
+      const ws = wsRef.current;
+      const alive =
+        ws &&
+        (ws.readyState === WebSocket.OPEN ||
+          ws.readyState === WebSocket.CONNECTING);
 
-      const params = new URLSearchParams({ task });
+      // Already live for this exact run, or observing while a starter is open?
+      // Don't tear it down — just resync the mode flag.
+      if (alive && (runKeyRef.current === key || observe)) {
+        setObserving(!!observe);
+        return;
+      }
+
+      // Switching to a different task: close the old connection (stops that run).
+      if (alive) {
+        ws.close();
+        wsRef.current = null;
+      }
+
+      runKeyRef.current = key;
+
+      const params = new URLSearchParams();
+      if (task) {
+        params.set("task", task);
+      }
       if (modeOverride) {
         params.set("mode_override", modeOverride);
       }
+      if (observe) {
+        params.set("observe", "true");
+      }
 
       const wsUrl = KODO_BASE_URL.replace(/^http/, "ws") + `/run/?${params}`;
-      const ws = new WebSocket(wsUrl);
-      wsRef.current = ws;
+      const newWs = new WebSocket(wsUrl);
+      wsRef.current = newWs;
+      erroredRef.current = false;
       setStatus("connecting");
       setError(null);
       setDone(false);
+      setObserving(!!observe);
       setEvents([]);
       setLogs([]);
       setThinking("");
@@ -89,16 +131,16 @@ export function TaskProvider({ children }: { children: ReactNode }) {
       setMetrics(null);
       setPlan(null);
 
-      ws.onopen = () => {
-        if (wsRef.current !== ws) {
-          ws.close();
+      newWs.onopen = () => {
+        if (wsRef.current !== newWs) {
+          newWs.close();
           return;
         }
         setStatus("connected");
       };
 
-      ws.onmessage = (event) => {
-        if (wsRef.current !== ws) return;
+      newWs.onmessage = (event) => {
+        if (wsRef.current !== newWs) return;
 
         try {
           const parsed: TaskEvent = JSON.parse(event.data);
@@ -126,8 +168,9 @@ export function TaskProvider({ children }: { children: ReactNode }) {
               break;
             case "status":
               if (parsed.status === "done" || parsed.status === "error") {
-                ws.close();
+                newWs.close();
                 wsRef.current = null;
+                runKeyRef.current = "";
                 setStatus("disconnected");
                 setDone(true);
                 if (parsed.status === "error") {
@@ -141,15 +184,22 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         }
       };
 
-      ws.onerror = () => {
-        if (wsRef.current !== ws) return;
+      newWs.onerror = () => {
+        if (wsRef.current !== newWs) return;
+        erroredRef.current = true;
         setStatus("error");
         setError("WebSocket connection error");
       };
 
-      ws.onclose = () => {
-        if (wsRef.current !== ws) return;
+      newWs.onclose = (event) => {
+        if (wsRef.current !== newWs) return;
         wsRef.current = null;
+        runKeyRef.current = "";
+        if (erroredRef.current) {
+          erroredRef.current = false;
+          setError(event.reason || "WebSocket connection error");
+          return;
+        }
         setStatus("disconnected");
       };
     },
@@ -169,6 +219,7 @@ export function TaskProvider({ children }: { children: ReactNode }) {
         status,
         error,
         done,
+        observing,
         connect,
         disconnect,
       }}
@@ -187,8 +238,9 @@ function useTaskContext<T extends TaskStreamTypes = TaskStreamTypes>(): TaskCont
 }
 
 export function useTaskRunner() {
-  const { connect, disconnect, status, error, done } = useTaskContext();
-  return { connect, disconnect, status, error, done };
+  const { connect, disconnect, status, error, done, observing } =
+    useTaskContext();
+  return { connect, disconnect, status, error, done, observing };
 }
 
 export function useTaskStream<T extends TaskStreamTypes = TaskStreamTypes>() {

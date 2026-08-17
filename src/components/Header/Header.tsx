@@ -13,7 +13,9 @@ export default function Header() {
         </div>
 
         <div>
-          <Button type="blurred">Home</Button>
+          <Button type="blurred" to="/">
+            Home
+          </Button>
           <Button type="blurred">Settings</Button>
         </div>
 

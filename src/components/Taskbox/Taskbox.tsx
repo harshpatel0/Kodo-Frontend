@@ -5,6 +5,7 @@ import Button from "../ui/Button/Button";
 import { CursorClickIcon, CursorIcon } from "@phosphor-icons/react";
 
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 type TaskBoxProperties = {
   taskValue: string;
@@ -18,9 +19,19 @@ export default function TaskBox({
   buttonDisabled,
 }: TaskBoxProperties) {
   const [isHovered, setIsHovered] = useState(false);
+  const navigate = useNavigate();
 
   return (
-    <div className={styles.taskBox}>
+    <form
+      className={styles.taskBox}
+      onSubmit={(event) => {
+        event.preventDefault();
+        const value = taskValue.trim();
+        if (value) {
+          navigate(`/task/${value}`);
+        }
+      }}
+    >
       <Input
         type="text"
         value={taskValue}
@@ -34,7 +45,7 @@ export default function TaskBox({
         onMouseLeave={() => setIsHovered(false)}
         style={{ padding: "9px 16px" }}
         disabled={buttonDisabled}
-        to={`/task/${taskValue}`}
+        to={taskValue.trim() ? `/task/${taskValue.trim()}` : undefined}
       >
         {isHovered ? (
           <div
@@ -62,6 +73,6 @@ export default function TaskBox({
           </div>
         )}
       </Button>
-    </div>
+    </form>
   );
 }

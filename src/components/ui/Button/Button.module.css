@@ -3,6 +3,7 @@
   border: none;
   outline: none;
   cursor: pointer;
+  text-decoration: none;
   transition: transform var(--t-mid);
 }
 

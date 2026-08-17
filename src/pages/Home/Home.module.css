@@ -9,11 +9,46 @@
 }
 
 .mainContent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  overflow: hidden;
+  transform: translateY(1.25rem);
+}
+
+.warning {
+  position: fixed;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  max-width: 90vw;
+  background: var(--red-dim);
+  color: var(--red);
+  border: 1px solid var(--red);
+  border-radius: var(--radius-lg);
+  padding: 0.6rem 1rem;
+  font-size: var(--text-sm);
+  box-shadow: var(--red-glow) 0 4px 20px;
+}
+
+.warningRetry {
+  border: 1px solid var(--red);
+  background: transparent;
+  color: inherit;
+  border-radius: var(--radius-md);
+  padding: 0.2rem 0.75rem;
+  cursor: pointer;
+  font-weight: 600;
+  white-space: nowrap;
 }
 
 .taskBox:hover {
