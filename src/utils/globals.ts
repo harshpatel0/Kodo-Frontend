@@ -1,5 +1,11 @@
 export const KODO_BASE_URL: string = "http://localhost:5636";
 
+const TRAY_APP_STORAGE_KEY = "trayApp";
+
+export function isTrayApp(): boolean {
+  return localStorage.getItem(TRAY_APP_STORAGE_KEY) === "true";
+}
+
 export async function getTaskRunningStatus(): Promise<{
   running: boolean;
   task: string | null;
