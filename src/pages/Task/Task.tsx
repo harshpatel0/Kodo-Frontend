@@ -16,8 +16,15 @@ import {
   LightningIcon,
 } from "@phosphor-icons/react";
 
+// Kodo emits `datetime.utcnow().isoformat()`, which has no "Z"/offset suffix.
+// This adds Time zone daya from the PC into it
+function parseServerTimestamp(ts: string): Date {
+  const hasTimezone = /Z$|[+-]\d{2}:?\d{2}$/.test(ts);
+  return new Date(hasTimezone ? ts : `${ts}Z`);
+}
+
 function formatTime(ts: string): string {
-  const date = new Date(ts);
+  const date = parseServerTimestamp(ts);
   if (Number.isNaN(date.getTime())) return "";
   return date.toLocaleTimeString([], {
     hour: "2-digit",
@@ -39,9 +46,27 @@ type TimelineNode =
 
 function buildTimeline(events: TaskEvent[]): TimelineNode[] {
   const nodes: TimelineNode[] = [];
+  // Kodo resends the *entire* accumulated history list on every "history"
+  // event rather than just what's new, so only take entries past what a
+  // previous "history" event in this same stream already contributed.
+  let seenHistoryCount = 0;
+  // Kodo emits "action" (the model announcing its decision) before it
+  // executes it and emits "history" (the recorded outcome). We want the
+  // outcome displayed first, so hold the action back until its history
+  // entry arrives (or a newer action supersedes it) before adding it.
+  let pendingAction: TimelineNode | null = null;
+
+  const flushPendingAction = () => {
+    if (pendingAction) {
+      nodes.push(pendingAction);
+      pendingAction = null;
+    }
+  };
+
   for (const event of events) {
     if (event.type === "action") {
-      nodes.push({
+      flushPendingAction();
+      pendingAction = {
         ts: event.ts,
         kind: "action",
         name:
@@ -49,13 +74,18 @@ function buildTimeline(events: TaskEvent[]): TimelineNode[] {
         params: Object.entries(event.data).filter(
           ([key]) => key !== "action" && key !== "history",
         ),
-      });
+      };
     } else if (event.type === "history") {
-      for (const entry of event.data.entries) {
+      const newEntries = event.data.entries.slice(seenHistoryCount);
+      for (const entry of newEntries) {
         nodes.push({ ts: event.ts, kind: "history", text: String(entry) });
       }
+      seenHistoryCount = event.data.entries.length;
+      flushPendingAction();
     }
   }
+  flushPendingAction();
+
   return nodes;
 }
 
