@@ -17,6 +17,20 @@
   box-shadow: 2px 4px 10px 1px whitesmoke;
 }
 
+.trayHeading {
+  transform: scale(0.85);
+  transform-origin: top left;
+}
+
+.locationHeadingRight {
+  left: auto;
+  right: 2rem;
+}
+
+.locationHeadingRight.trayHeading {
+  transform-origin: top right;
+}
+
 .headingText,
 .headingSubText {
   mix-blend-mode: difference;
