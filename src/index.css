@@ -282,6 +282,6 @@ h6 {
 
 body {
   font-family: "Jost";
-  background-color: var(--bg-base);
+  background-color: #000;
   color: var(--color-foreground);
 }
